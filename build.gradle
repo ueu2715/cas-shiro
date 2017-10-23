@@ -2,9 +2,12 @@ group 'com.sx'
 version '1.0-SNAPSHOT'
 
 buildscript {
-    ext.kotlin_version = '1.1.4-3'
-
+    ext{
+        kotlin_version = '1.1.4-3'
+        tomcat_version = '8.5.11'
+    }
     repositories {
+        maven{url "http://130.10.8.208/repository/bksx-respository/"}
         mavenLocal()
         mavenCentral()
     }
@@ -21,13 +24,14 @@ sourceCompatibility = 1.8
 
 repositories {
     //mavenLocal()
+    maven{url "http://130.10.8.208/repository/bksx-respository/"}
     mavenCentral()
     jcenter()
     maven{url "http://repo.spring.io/libs-milestone/"}
 }
 
 dependencies {
-    ext.jartree = fileTree(dir: "D:/prog/apache-tomcat-8.5.23/lib",include: "**/*.jar")
+    ext.jartree = fileTree(dir: "D:/prog/apache-tomcat-$tomcat_version/lib",include: "**/*.jar")
 
     compile "org.jetbrains.kotlin:kotlin-stdlib-jre8:$kotlin_version"
 
