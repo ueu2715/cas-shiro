@@ -22,8 +22,12 @@ apply plugin: 'war'
 
 sourceCompatibility = 1.8
 
+ext{
+    shiro_version = '1.2.2'
+}
+
 repositories {
-    //mavenLocal()
+    mavenLocal()
     maven{url "http://130.10.8.208/repository/bksx-respository/"}
     mavenCentral()
     jcenter()
@@ -45,6 +49,11 @@ dependencies {
     providedCompile jartree
 
     compile 'javax.inject:javax.inject:1'
+
+    compile "org.apache.shiro:shiro-core:$shiro_version",
+            "org.apache.shiro:shiro-spring:$shiro_version",
+            "org.apache.shiro:shiro-web:$shiro_version",
+            "org.apache.shiro:shiro-ehcache:$shiro_version"
 
     testCompile group: 'junit', name: 'junit', version: '4.11'
     testCompile group: 'junit', name: 'junit', version: '4.12'

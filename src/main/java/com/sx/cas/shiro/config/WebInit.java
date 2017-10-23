@@ -12,6 +12,7 @@ import javax.inject.Inject;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRegistration;
+import java.util.Map;
 
 public class WebInit implements WebApplicationInitializer{
 
@@ -28,7 +29,14 @@ public class WebInit implements WebApplicationInitializer{
         registration.setLoadOnStartup(1);
         registration.addMapping("/");
 
-        FilterRegistrationBean frb = cxt.getBean(FilterRegistrationBean.class);
-        frb.onStartup(servletContext);
+        Map<String, FilterRegistrationBean> frbs = cxt.getBeansOfType(FilterRegistrationBean.class);
+        frbs.entrySet().stream()
+                .forEach(f -> {
+                    try {
+                        f.getValue().onStartup(servletContext);
+                    } catch (ServletException e) {
+                        e.printStackTrace();
+                    }
+                });
     }
 }
