@@ -12,5 +12,8 @@
 </head>
 <body>
 hello world
+${map.U_name}
+<br />
+${map}
 </body>
 </html>

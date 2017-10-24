@@ -10,4 +10,8 @@ data class User(
         var password: String
 ): Serializable{
     var id: Long ?= null
+
+    fun getName(): String{
+        return username
+    }
 }
