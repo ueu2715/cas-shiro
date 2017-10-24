@@ -15,5 +15,7 @@ hello world
 ${map.U_name}
 <br />
 ${map}
+<br />
+<a href="logout">logout</a>
 </body>
 </html>

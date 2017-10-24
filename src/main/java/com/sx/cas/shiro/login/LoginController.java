@@ -1,6 +1,7 @@
 package com.sx.cas.shiro.login;
 
 import com.sx.cas.shiro.bean.User;
+import com.sx.cas.shiro.config.ShiroConfig;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.ExcessiveAttemptsException;
 import org.apache.shiro.authc.IncorrectCredentialsException;
@@ -13,11 +14,16 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.inject.Inject;
+import java.util.Properties;
+
 /**
  * Created by Administrator on 2017/10/23 0023.
  */
 @Controller
 public class LoginController {
+    @Inject
+    private Properties propertyConfig;
 
     @RequestMapping("login/{username}/{password}")
     public ModelAndView login(@PathVariable("username") String username, @PathVariable("password") String password) {
@@ -51,6 +57,6 @@ public class LoginController {
     public String logout(){
         Subject subject = SecurityUtils.getSubject();
         subject.logout();
-        return "login";
+        return "redirect:" + ShiroConfig.logoutUrl + "?service="+ShiroConfig.loginUrl;
     }
 }
