@@ -1,0 +1,9 @@
+cas:
+  prefix: "http://130.10.7.163:7443/cas3.5"
+  login: "/login"
+  logout: "/logout"
+server:
+  prefix: "http://130.10.7.123:8080"
+  index: "/hello"
+  urlPattern: "/"
+  unauthorizedUrl: "/error/403.html"

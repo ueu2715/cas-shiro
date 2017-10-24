@@ -2,6 +2,7 @@ package com.sx.cas.shiro.config;
 
 import org.jetbrains.annotations.NotNull;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
+import org.springframework.boot.web.servlet.ServletListenerRegistrationBean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.WebApplicationInitializer;
 import org.springframework.web.context.support.AnnotationConfigWebApplicationContext;
@@ -12,6 +13,7 @@ import javax.inject.Inject;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRegistration;
+import java.util.Map;
 
 public class WebInit implements WebApplicationInitializer{
 
@@ -28,7 +30,19 @@ public class WebInit implements WebApplicationInitializer{
         registration.setLoadOnStartup(1);
         registration.addMapping("/");
 
-        FilterRegistrationBean frb = cxt.getBean(FilterRegistrationBean.class);
-        frb.onStartup(servletContext);
+        //init filter
+        Map<String, FilterRegistrationBean> frbs = cxt.getBeansOfType(FilterRegistrationBean.class);
+        frbs.entrySet().stream()
+                .forEach(f -> {
+                    try {
+                        f.getValue().onStartup(servletContext);
+                    } catch (ServletException e) {
+                        e.printStackTrace();
+                    }
+                });
+
+        //init listener
+        ServletListenerRegistrationBean srb = cxt.getBean(ServletListenerRegistrationBean.class);
+        srb.onStartup(servletContext);
     }
 }
